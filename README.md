@@ -1,75 +1,53 @@
-# Nuxt Minimal Starter
+# Pilot App — Frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxt 4 mobile web app for Susi Air pilots: sign in, hours-to-limit dashboard with trend chart, documents with urgency badges, monthly duty calendar.
+Live: `https://pilotfrontend.vercel.app/`
+Backend repo: `https://github.com/reinfork/Pilot-App-Backend`
 
-## Setup
+## Run
 
-Make sure to install dependencies:
+Prerequisite: Node 22.
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+npm run dev      # :3000 — expects the backend on :8000 (see env below)
+npm run build    # production build
+npm run preview  # serve the production build locally
 ```
 
-## Development Server
+## Environment
 
-Start the development server on `http://localhost:3000`:
+| Var | Required where | Effect |
+|---|---|---|
+| `NUXT_PUBLIC_API_BASE` | Production builds | Backend URL. Defaults to `http://localhost:8000` for local dev. Must be set **before** building on Vercel — public runtime config is inlined at build time, so changing it requires a redeploy. |
 
-```bash
-# npm
-npm run dev
+No `.env` file is used or needed. Local dev works with zero env vars (backend defaults to localhost).
 
-# pnpm
-pnpm dev
+## Screens
 
-# yarn
-yarn dev
+- `/login` — username/password form, inline error on 401, show/hide password toggle.
+- `/` — greeting header (`/pilot/me`), 4 limit cards (Daily/Weekly/Monthly/Annual), interactive trend chart (`/flight-hours/summary`), documents list (`/documents`).
+- `/schedule` — month calendar with prev/next (`/schedules`), day cells colored by `base_color`, tick when `count_logbooks === count_schedules`, legend below.
+- `/schedule/[date]` — placeholder detail route (spec'd, minimal).
 
-# bun
-bun run dev
-```
+## Main choices (and why)
 
-## Production
+- **Nuxt 4 + Pinia + SCSS, no UI library.** File routing and auto-imports cover the app's needs; a component library would be unused weight.
+- **One `$api` plugin** (`app/plugins/api.ts`). Attaches the Bearer token and turns any 401 into clear-token → `/login`. One shared place instead of per-page auth handling.
+- **Memory-only token.** Refresh = re-login. Matches a demo session model with no persistence code.
+- **`chart.js` direct, no wrapper.** Limit line is a constant second dataset; chart.js auto-registration is one import. Rolling sums stay server-side — the only frontend math is the y-domain: `max(res.max, ceil(peak))`, red line at `limit`, never clamp data.
+- **Per-page `useFetch`, no cache layer.** Six small requests on Home; a cache (or TanStack Query) only pays off with refetch/dedup needs.
+- **Scoped styles in sibling `.scss` files.** Same scoping as inline blocks, co-located per component, no global-namespace risk.
+- **Bottom nav: Home + Schedule only.** Logbook/More have no backend endpoints, so shipping them would be dead nav.
 
-Build the application for production:
+## Deploy (Vercel)
 
-```bash
-# npm
-npm run build
+Import this repo (Nuxt auto-detected). Set `NUXT_PUBLIC_API_BASE` to the backend URL, then deploy. No `vercel.json` needed.
 
-# pnpm
-pnpm build
+## Planned future changes
 
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Revisit memory-only token if refresh-logout becomes unwanted (persist + TTL against the 24h backend expiry).
+- Add Logbook/More navigation when the backend serves those surfaces.
+- Swap the chart approach only if pan/zoom is needed (wrapper lib or annotation plugin).
+- Commit the Edge-driven verification scripts as CI e2e if regression protection matters (currently run ad-hoc).
+- Per-environment API URLs via Vercel env scopes (production vs preview) if preview backends appear.
