@@ -1,0 +1,117 @@
+.sched {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 96px;
+  display: grid;
+  gap: 14px;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    color: $navy;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid #e2e5ea;
+    border-radius: 50%;
+    background: $surface;
+    color: $navy;
+    font-size: 22px;
+    line-height: 1;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.week {
+  font-size: 11px;
+  font-weight: 800;
+  color: $text-secondary;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.day {
+  aspect-ratio: 0.82;
+  border-radius: 10px;
+  background: $surface;
+  box-shadow: $shadow-card;
+  text-decoration: none;
+  color: $text-primary;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  padding-top: 5px;
+  position: relative;
+
+  &.today {
+    outline: 2px solid $navy;
+    outline-offset: 1px;
+  }
+}
+
+.blank {
+  aspect-ratio: 0.82;
+}
+
+.num {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.base {
+  font-size: 9px;
+  font-weight: 700;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mark {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.legend {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: $text-primary;
+  }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.error {
+  color: $danger;
+  font-weight: 700;
+}

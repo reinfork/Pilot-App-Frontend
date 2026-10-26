@@ -1,0 +1,161 @@
+.home {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 96px;
+  display: grid;
+  gap: 20px;
+}
+
+header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+.greet {
+  color: $text-secondary;
+  font-size: 13px;
+}
+
+h1 {
+  color: $navy;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.total {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+h2 {
+  color: $navy;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+section {
+  display: grid;
+}
+
+.cards {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  li {
+    background: $surface;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-card;
+    padding: 14px;
+    display: grid;
+    gap: 2px;
+  }
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  color: $text-secondary;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: 800;
+  color: $navy;
+}
+
+.over .value {
+  color: $danger;
+}
+
+.limit {
+  font-size: 12px;
+  color: $text-secondary;
+}
+
+.ranges {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 10px;
+
+  button {
+    flex: 1;
+    height: 44px;
+    border: 1px solid #e2e5ea;
+    border-radius: 999px;
+    background: $surface;
+    color: $text-secondary;
+    font-size: 13px;
+    font-weight: 800;
+
+    &.active {
+      background: $navy;
+      border-color: $navy;
+      color: #fff;
+    }
+  }
+}
+
+.chart {
+  position: relative;
+  height: 220px;
+  background: $surface;
+  border-radius: $radius-sm;
+  box-shadow: $shadow-card;
+  padding: 12px 8px 8px;
+}
+
+.docs {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+
+  li {
+    background: $surface;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-card;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
+.doc-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.doc-date {
+  font-size: 12px;
+  color: $text-secondary;
+}
+
+.badge {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: capitalize;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: #fff;
+
+  &[data-status='expired'] { background: $danger; }
+  &[data-status='soon'] { background: $warning; }
+  &[data-status='safe'] { background: $success; }
+}
+
+.error {
+  color: $danger;
+  font-weight: 700;
+}

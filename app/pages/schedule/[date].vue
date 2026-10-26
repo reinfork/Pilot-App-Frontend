@@ -11,29 +11,4 @@ const date = computed(() => String(useRoute().params.date))
   </main>
 </template>
 
-<style scoped lang="scss">
-.detail {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px 16px 96px;
-  display: grid;
-  gap: 10px;
-
-  a {
-    color: $navy;
-    font-weight: 800;
-    text-decoration: none;
-  }
-
-  h1 {
-    color: $navy;
-    font-size: 22px;
-    font-weight: 800;
-  }
-
-  p {
-    color: $text-secondary;
-    font-size: 14px;
-  }
-}
-</style>
+<style scoped lang="scss" src="./[date].scss"></style>
