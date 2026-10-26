@@ -4,6 +4,7 @@ const username = ref('')
 const password = ref('')
 const error = ref('')
 const pending = ref(false)
+const showPassword = ref(false)
 
 async function signIn() {
   if (pending.value) return
@@ -35,7 +36,12 @@ async function signIn() {
       </label>
       <label>
         Password
-        <input v-model="password" name="password" type="password" autocomplete="current-password" required />
+        <span class="pw">
+          <input v-model="password" name="password" :type="showPassword ? 'text' : 'password'" autocomplete="current-password" required />
+          <button type="button" class="toggle" :aria-label="showPassword ? 'Hide password' : 'Show password'" @click="showPassword = !showPassword">
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </span>
       </label>
       <p v-if="error" class="error" role="alert">{{ error }}</p>
       <button type="submit" :disabled="pending">
@@ -98,6 +104,30 @@ input {
     outline: 2px solid $navy;
     outline-offset: 1px;
   }
+}
+
+.pw {
+  position: relative;
+  display: block;
+}
+
+.pw input {
+  width: 100%;
+  padding-right: 76px;
+}
+
+.toggle {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: $navy;
+  font-size: 13px;
 }
 
 .error {
